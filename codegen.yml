@@ -1,0 +1,10 @@
+schema:
+  - localhost:4004
+overwrite: true
+documents:
+  - src/graphql/graphql.gql
+generates:
+  ./src/graphql/index.tsx:
+    config:
+      withHOC: false
+      withHooks: true

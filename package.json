@@ -1,8 +1,7 @@
 {
-  "name": "with-typescript-graphql",
+  "name": "next-apollo-api",
   "version": "0.1.0",
-  "author": "",
-  "license": "ISC",
+  "author": "marcello antunes",
   "scripts": {
     "codegen": "graphql-let",
     "dev": "yarn codegen && next",
