@@ -1,24 +1,19 @@
 import withApollo from '../lib/with-apollo'
 import Link from 'next/link'
-import { useViewerQuery } from '../lib/viewer.graphql'
+import { useLoginMutation, useLogoutMutation } from "../src/generated/graphql"
+
 
 const Index = () => {
-  const { data } = useViewerQuery()
+  const [login] = useLoginMutation()
+  const [logout] = useLogoutMutation()
 
-  if (data) {
-    const { viewer } = data
-    return (
-      <div>
-        You're signed in as {viewer.name} and you're {viewer.status} goto{' '}
-        <Link href="/about">
-          <a>static</a>
-        </Link>{' '}
-        page.
-      </div>
-    )
-  }
-
-  return <div>...</div>
+  return (
+    <div>
+      <Link href="/about">
+        <a>static</a>
+      </Link>
+    </div>
+  )
 }
 
 export default withApollo(Index)

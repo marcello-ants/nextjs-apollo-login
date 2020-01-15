@@ -1,5 +1,5 @@
-overwrite: true
 schema: "http://localhost:4004/graphql"
+overwrite: true
 documents: "src/graphql/graphql.gql"
 generates:
   src/generated/graphql.tsx:
@@ -7,6 +7,11 @@ generates:
       - "typescript"
       - "typescript-operations"
       - "typescript-react-apollo"
-  ./graphql.schema.json:
-    plugins:
-      - "introspection"
+  # ./graphql.schema.json:
+    # plugins:
+    #   - "introspection"
+    config:
+      withHOC: false
+      withHooks: true
+      apolloReactHooksImportFrom: '@apollo/react-hooks'
+      reactApolloVersion: 3
