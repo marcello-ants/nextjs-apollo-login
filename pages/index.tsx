@@ -1,11 +1,11 @@
 import withApollo from '../lib/with-apollo'
 import Link from 'next/link'
-import { useLoginMutation, useLogoutMutation } from "../src/generated/graphql"
+// import { useLoginMutation, useLogoutMutation } from "../src/generated/graphql"
 
 
 const Index = () => {
-  const [login] = useLoginMutation()
-  const [logout] = useLogoutMutation()
+  // const [login] = useLoginMutation()
+  // const [logout] = useLogoutMutation()
 
   return (
     <div>

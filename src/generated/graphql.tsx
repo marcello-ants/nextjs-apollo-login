@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
-import * as ApolloReactCommon from '@apollo/client';
+import * as ApolloReactCommon from '@apollo/react-common';
 import * as React from 'react';
-import * as ApolloReactComponents from '@apollo/client';
+import * as ApolloReactComponents from '@apollo/react-components';
 import * as ApolloReactHooks from '@apollo/react-hooks';
 export type Maybe<T> = T | null;
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
