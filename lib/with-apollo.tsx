@@ -5,6 +5,7 @@ import { ApolloProvider } from '@apollo/react-hooks'
 import { ApolloClient } from 'apollo-client'
 import { InMemoryCache, NormalizedCacheObject } from 'apollo-cache-inmemory'
 
+
 type TApolloClient = ApolloClient<NormalizedCacheObject>
 
 type InitialProps = {
@@ -157,7 +158,7 @@ function createIsomorphLink() {
   } else {
     const { HttpLink } = require('apollo-link-http')
     return new HttpLink({
-      uri: '/api/graphql',
+      uri: 'http://localhost:4004/graphql',
       credentials: 'same-origin',
     })
   }

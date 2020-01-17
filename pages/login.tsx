@@ -1,8 +1,9 @@
 import React from "react"
 import { Formik } from "formik"
 import { useLoginMutation } from "../src/generated/graphql"
+import withApollo from "../lib/with-apollo"
 
-export default () => {
+const Login = () => {
   const [login] = useLoginMutation()
 
   return (
@@ -10,8 +11,10 @@ export default () => {
       initialValues={{ email: "", password: ""}}
       onSubmit={async (values, { setSubmitting }) => {
         const input: Partial<any> = {
-          email: values.email, 
-          password: values.password
+          variables: {
+            email: values.email, 
+            password: values.password
+          }
         }
         
         await login(input)
@@ -57,3 +60,5 @@ export default () => {
     />
   )
 }
+
+export default withApollo(Login)
