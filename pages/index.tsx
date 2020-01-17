@@ -1,18 +1,16 @@
 import withApollo from '../lib/with-apollo'
 import Link from 'next/link'
-// import { useLoginMutation, useLogoutMutation } from "../src/generated/graphql"
-
+import { ApolloProvider } from '@apollo/react-hooks'
+import {apolloClient} from "../lib/with-apollo"
 
 const Index = () => {
-  // const [login] = useLoginMutation()
-  // const [logout] = useLogoutMutation()
-
   return (
-    <div>
-      <Link href="/about">
-        <a>static</a>
+    <ApolloProvider client={apolloClient}>
+      <Link href="/login">
+        <a>login</a>
       </Link>
-    </div>
+    </ApolloProvider>
+    
   )
 }
 
