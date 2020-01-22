@@ -1,10 +1,21 @@
 import React from "react"
 import { Formik } from "formik"
-import { useLoginMutation } from "../src/generated/graphql"
+import { useLoginMutation, LoginDocument, useLogoutMutation } from "../src/generated/graphql"
 import withApollo from "../lib/with-apollo"
 
 const Login = () => {
-  const [login] = useLoginMutation()
+  const [logout] = useLogoutMutation()
+  const [loginMutation, {data, loading}] = useLoginMutation(LoginDocument)
+
+  async function submitForm(input: any) {
+    try {
+      await loginMutation(input)
+      if (!loading) console.log(data)
+      
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <Formik
@@ -16,8 +27,7 @@ const Login = () => {
             password: values.password
           }
         }
-        
-        await login(input)
+        submitForm(input)
         setSubmitting(false)
       }}
       render={({
@@ -54,6 +64,9 @@ const Login = () => {
             <button type="submit" disabled={isSubmitting}>
               submit
             </button>
+            <button onClick={() => logout()}>
+              logout
+            </button>
           </form>
         )
       }}
@@ -62,3 +75,6 @@ const Login = () => {
 }
 
 export default withApollo(Login)
+
+// HOC
+// high order function
