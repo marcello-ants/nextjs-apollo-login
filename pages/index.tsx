@@ -1,14 +1,17 @@
-import withApollo from '../lib/with-apollo'
-import Link from 'next/link'
+import withApollo from "../lib/with-apollo"
+import UnauthenticatedApp from "../components/UnauthenticatedApp"
+// import AuthenticatedApp from "../components/AuthenticatedApp"
+// import Link from 'next/link'
 
 const Index = () => {
   return (
-    
-      <Link href="/login">
+    <div>
+      <UnauthenticatedApp />
+      {/* <AuthenticatedApp /> */}
+      {/* <Link href="/login">
         <a>login</a>
-      </Link>
-    
-    
+      </Link> */}
+    </div>
   )
 }
 

@@ -4,30 +4,21 @@ import { useLoginMutation, LoginDocument, useLogoutMutation } from "../src/gener
 import withApollo from "../lib/with-apollo"
 
 const Login = () => {
+  const [input, setInput] = React.useState(LoginDocument)
   const [logout] = useLogoutMutation()
-  const [loginMutation, {data, loading}] = useLoginMutation(LoginDocument)
-
-  async function submitForm(input: any) {
-    try {
-      await loginMutation(input)
-      if (!loading) console.log(data)
-      
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
+  
+  const [loginMutation] = useLoginMutation({
+    variables: input,
+    onCompleted: (data) => console.log(data),
+    onError: (error) => console.log(error)
+  });
+  
   return (
     <Formik
       initialValues={{ email: "", password: ""}}
       onSubmit={async (values, { setSubmitting }) => {
-        const input: Partial<any> = {
-          variables: {
-            email: values.email, 
-            password: values.password
-          }
-        }
-        submitForm(input)
+        setInput({...input, email: values.email, password: values.password })
+        await loginMutation(input)
         setSubmitting(false)
       }}
       render={({
@@ -75,6 +66,3 @@ const Login = () => {
 }
 
 export default withApollo(Login)
-
-// HOC
-// high order function
