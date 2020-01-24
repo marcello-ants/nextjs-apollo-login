@@ -1,17 +1,24 @@
 import React from "react"
 import { Formik } from "formik"
 import { useLoginMutation, LoginDocument, useLogoutMutation } from "../src/generated/graphql"
-import withApollo from "../lib/with-apollo"
 
-const Login = () => {
+interface LoginProps {
+  parentCallback: (data: any) => void
+}
+
+const Login = ({parentCallback} :LoginProps) => {
   const [input, setInput] = React.useState(LoginDocument)
   const [logout] = useLogoutMutation()
+
+  const sendData = (data: any) => {
+    parentCallback(data)
+  }
   
   const [loginMutation] = useLoginMutation({
     variables: input,
-    onCompleted: (data) => console.log(data),
+    onCompleted: (data) => sendData(data),
     onError: (error) => console.log(error)
-  });
+  })
   
   return (
     <Formik
@@ -65,4 +72,4 @@ const Login = () => {
   )
 }
 
-export default withApollo(Login)
+export default Login
