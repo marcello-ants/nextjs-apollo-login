@@ -3,15 +3,15 @@ import { Formik } from "formik"
 import { useLoginMutation, LoginDocument, useLogoutMutation } from "../src/generated/graphql"
 
 interface LoginProps {
-  parentCallback: (data: any) => void
+  sendLoginInfo: (data: any) => void
 }
 
-const Login = ({parentCallback} :LoginProps) => {
+const Login = ({sendLoginInfo}: LoginProps) => {
   const [input, setInput] = React.useState(LoginDocument)
   const [logout] = useLogoutMutation()
 
   const sendData = (data: any) => {
-    parentCallback(data)
+    sendLoginInfo(data)
   }
   
   const [loginMutation] = useLoginMutation({

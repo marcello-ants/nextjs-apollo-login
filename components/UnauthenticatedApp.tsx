@@ -1,20 +1,28 @@
-import React, {useState} from "react"
+import React from "react"
 import Login from "./Login"
 
-const UnauthenticatedApp = () => {
-  const [token, setToken] = useState("")
-  const localData = localStorage.getItem("token")
+interface Props {
+  sendLocalData: (data: any) => void
+}
 
-  const callbackFunction = (childData: any) => {
-    setToken(childData.loginWithPassword.token)
-    localStorage.setItem("token", token)
-    console.log(localData)
+const UnauthenticatedApp = ({sendLocalData}: Props) => {
+  let localData:any = { token: undefined}
+
+  if (typeof window !== 'undefined') {
+    localData.token = localStorage.getItem("token") 
+  } 
+
+  const getLoginInfo = (data: any) => {
+    localStorage.setItem("token", data.loginWithPassword.token)
+    localData.token = localStorage.getItem("token")
+    sendLocalData(localData)
   }
 
   return (
-    <div>
-      <Login parentCallback={callbackFunction}/>
-    </div>
+    <>
+      <p>you're not logged in</p>
+      <Login sendLoginInfo={getLoginInfo}/>
+    </>
   )
 }
 

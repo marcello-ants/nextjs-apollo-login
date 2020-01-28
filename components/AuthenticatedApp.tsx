@@ -3,7 +3,7 @@ import React from "react"
 const AuthenticatedApp = () => {
   return (
     <div>
-      auth
+      you're logged in
     </div>
   )
 }
