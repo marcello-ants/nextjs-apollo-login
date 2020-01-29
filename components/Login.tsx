@@ -1,16 +1,15 @@
 import React from "react"
 import { Formik } from "formik"
-import { useLoginMutation, LoginDocument, useLogoutMutation } from "../src/generated/graphql"
+import { useLoginMutation, LoginDocument } from "../src/graphql/index"
 
 interface LoginProps {
-  sendLoginInfo: (data: any) => void
+  sendLoginInfo: (data: object) => void
 }
 
 const Login = ({sendLoginInfo}: LoginProps) => {
   const [input, setInput] = React.useState(LoginDocument)
-  const [logout] = useLogoutMutation()
 
-  const sendData = (data: any) => {
+  const sendData = (data: object) => {
     sendLoginInfo(data)
   }
   
@@ -61,9 +60,6 @@ const Login = ({sendLoginInfo}: LoginProps) => {
             />
             <button type="submit" disabled={isSubmitting}>
               submit
-            </button>
-            <button onClick={() => logout()}>
-              logout
             </button>
           </form>
         )
