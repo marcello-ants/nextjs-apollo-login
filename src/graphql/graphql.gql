@@ -30,3 +30,14 @@ query GetTechnologies {
     ...TechnologyFields
   }
 }
+
+fragment SurveyFields on Survey {
+  id
+  name
+}
+
+query GetSurveys {
+  surveys {
+    ...SurveyFields
+  }
+}

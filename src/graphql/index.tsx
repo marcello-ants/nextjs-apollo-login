@@ -1162,6 +1162,22 @@ export type GetTechnologiesQuery = (
   )> }
 );
 
+export type SurveyFieldsFragment = (
+  { __typename?: 'Survey' }
+  & Pick<Survey, 'id' | 'name'>
+);
+
+export type GetSurveysQueryVariables = {};
+
+
+export type GetSurveysQuery = (
+  { __typename?: 'Query' }
+  & { surveys: Maybe<Array<(
+    { __typename?: 'Survey' }
+    & SurveyFieldsFragment
+  )>> }
+);
+
 export const LoginSuccessFieldsFragmentDoc = gql`
     fragment LoginSuccessFields on LoginWithPasswordSuccess {
   token
@@ -1179,6 +1195,12 @@ export const TechnologyFieldsFragmentDoc = gql`
   name
   status
   imageId
+}
+    `;
+export const SurveyFieldsFragmentDoc = gql`
+    fragment SurveyFields on Survey {
+  id
+  name
 }
     `;
 export const LoginDocument = gql`
@@ -1293,3 +1315,41 @@ export function useGetTechnologiesLazyQuery(baseOptions?: ApolloReactHooks.LazyQ
 export type GetTechnologiesQueryHookResult = ReturnType<typeof useGetTechnologiesQuery>;
 export type GetTechnologiesLazyQueryHookResult = ReturnType<typeof useGetTechnologiesLazyQuery>;
 export type GetTechnologiesQueryResult = ApolloReactCommon.QueryResult<GetTechnologiesQuery, GetTechnologiesQueryVariables>;
+export const GetSurveysDocument = gql`
+    query GetSurveys {
+  surveys {
+    ...SurveyFields
+  }
+}
+    ${SurveyFieldsFragmentDoc}`;
+export type GetSurveysComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<GetSurveysQuery, GetSurveysQueryVariables>, 'query'>;
+
+    export const GetSurveysComponent = (props: GetSurveysComponentProps) => (
+      <ApolloReactComponents.Query<GetSurveysQuery, GetSurveysQueryVariables> query={GetSurveysDocument} {...props} />
+    );
+    
+
+/**
+ * __useGetSurveysQuery__
+ *
+ * To run a query within a React component, call `useGetSurveysQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetSurveysQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetSurveysQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetSurveysQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetSurveysQuery, GetSurveysQueryVariables>) {
+        return ApolloReactHooks.useQuery<GetSurveysQuery, GetSurveysQueryVariables>(GetSurveysDocument, baseOptions);
+      }
+export function useGetSurveysLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetSurveysQuery, GetSurveysQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<GetSurveysQuery, GetSurveysQueryVariables>(GetSurveysDocument, baseOptions);
+        }
+export type GetSurveysQueryHookResult = ReturnType<typeof useGetSurveysQuery>;
+export type GetSurveysLazyQueryHookResult = ReturnType<typeof useGetSurveysLazyQuery>;
+export type GetSurveysQueryResult = ApolloReactCommon.QueryResult<GetSurveysQuery, GetSurveysQueryVariables>;
