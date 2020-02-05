@@ -8,105 +8,6 @@ fragment LoginSuccessFields on LoginWithPasswordSuccess {
   }
 }
 
-fragment SurveyInfoFields on Survey {
-  id
-  name
-  authPageImageId
-  authPageText
-  slug
-  description
-  imageId
-  workgroupImageId
-  darkLabelsOnImageEnabled
-  labelsOnImageEnabled
-  workgroupName
-  metricPageText
-  emailLoginTitleText
-}
-
-fragment MetricFields on Metric {
-  id
-  name
-  description
-  pollModel
-  scoreRange {
-    min
-    max
-  }
-  calculationMethod
-  resultLabels {
-    label
-    description
-    score
-  }
-  questions {
-    id
-    label
-    description
-    options {
-      id
-      label
-      description
-      score
-    }
-  }
-  resultLabels {
-    label
-    description
-    score
-  }
-}
-
-fragment SurveyCommonFields on Survey {
-  ...SurveyInfoFields
-  metrics {
-    ...MetricFields
-  }
-
-  questionsCount
-  technologiesCount
-
-  project {
-    id
-    name
-    summary
-    description
-    imageId
-  }
-
-  board {
-    id
-  }
-}
-
-fragment TechnologyFields on TechnologySurvey {
-  id
-  name
-  imageId
-  status
-  description {
-    id
-    longText
-    shortText
-    longTextHtml
-    shortTextHtml
-  }
-  viewerAnswers {
-    ...MetricAnswerFields
-  }
-}
-
-fragment SurveyParticipantFields on Survey {
-  technologies {
-    ...TechnologyFields
-  }
-}
-
-fragment SurveyAllFields on Survey {
-  ...SurveyCommonFields
-  ...SurveyParticipantFields
-}
-
 mutation Login($email: String!, $password: String!) {
   loginWithPassword(email: $email, password: $password) {
     ...LoginSuccessFields
@@ -117,16 +18,15 @@ mutation Logout {
   logout
 }
 
-query GetSurvey($id: String!, $boardId: String! = "") {
-  survey(id: $id) {
-    ...SurveyAllFields
-  }
-  viewer {
-    ...UserFields
-  }
-  board(id: $boardId) {
-    technologies {
-      id
-    }
+fragment TechnologyFields on Technology {
+  id
+  name
+  status
+  imageId
+}
+
+query GetTechnologies {
+  technologies {
+    ...TechnologyFields
   }
 }

@@ -1146,6 +1146,22 @@ export type LogoutMutation = (
   & Pick<Mutation, 'logout'>
 );
 
+export type TechnologyFieldsFragment = (
+  { __typename?: 'Technology' }
+  & Pick<Technology, 'id' | 'name' | 'status' | 'imageId'>
+);
+
+export type GetTechnologiesQueryVariables = {};
+
+
+export type GetTechnologiesQuery = (
+  { __typename?: 'Query' }
+  & { technologies: Array<(
+    { __typename?: 'Technology' }
+    & TechnologyFieldsFragment
+  )> }
+);
+
 export const LoginSuccessFieldsFragmentDoc = gql`
     fragment LoginSuccessFields on LoginWithPasswordSuccess {
   token
@@ -1155,6 +1171,14 @@ export const LoginSuccessFieldsFragmentDoc = gql`
     roles
     isAdmin
   }
+}
+    `;
+export const TechnologyFieldsFragmentDoc = gql`
+    fragment TechnologyFields on Technology {
+  id
+  name
+  status
+  imageId
 }
     `;
 export const LoginDocument = gql`
@@ -1231,3 +1255,41 @@ export function useLogoutMutation(baseOptions?: ApolloReactHooks.MutationHookOpt
 export type LogoutMutationHookResult = ReturnType<typeof useLogoutMutation>;
 export type LogoutMutationResult = ApolloReactCommon.MutationResult<LogoutMutation>;
 export type LogoutMutationOptions = ApolloReactCommon.BaseMutationOptions<LogoutMutation, LogoutMutationVariables>;
+export const GetTechnologiesDocument = gql`
+    query GetTechnologies {
+  technologies {
+    ...TechnologyFields
+  }
+}
+    ${TechnologyFieldsFragmentDoc}`;
+export type GetTechnologiesComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<GetTechnologiesQuery, GetTechnologiesQueryVariables>, 'query'>;
+
+    export const GetTechnologiesComponent = (props: GetTechnologiesComponentProps) => (
+      <ApolloReactComponents.Query<GetTechnologiesQuery, GetTechnologiesQueryVariables> query={GetTechnologiesDocument} {...props} />
+    );
+    
+
+/**
+ * __useGetTechnologiesQuery__
+ *
+ * To run a query within a React component, call `useGetTechnologiesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetTechnologiesQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetTechnologiesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetTechnologiesQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetTechnologiesQuery, GetTechnologiesQueryVariables>) {
+        return ApolloReactHooks.useQuery<GetTechnologiesQuery, GetTechnologiesQueryVariables>(GetTechnologiesDocument, baseOptions);
+      }
+export function useGetTechnologiesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetTechnologiesQuery, GetTechnologiesQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<GetTechnologiesQuery, GetTechnologiesQueryVariables>(GetTechnologiesDocument, baseOptions);
+        }
+export type GetTechnologiesQueryHookResult = ReturnType<typeof useGetTechnologiesQuery>;
+export type GetTechnologiesLazyQueryHookResult = ReturnType<typeof useGetTechnologiesLazyQuery>;
+export type GetTechnologiesQueryResult = ApolloReactCommon.QueryResult<GetTechnologiesQuery, GetTechnologiesQueryVariables>;
