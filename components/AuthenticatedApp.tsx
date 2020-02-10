@@ -1,4 +1,5 @@
 import React from "react"
+import Link from 'next/link'
 import Logout from "./Logout"
 import { useGetTechnologiesQuery} from "../src/graphql/index"
 
@@ -18,6 +19,7 @@ const AuthenticatedApp = () => {
       ) :(
         <>
           <div>you're logged in</div>
+          <Link href="/surveys" passHref></Link>
           <Logout />
         </>  
       )}
