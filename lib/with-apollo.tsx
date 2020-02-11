@@ -1,9 +1,10 @@
-import { NextPage, NextPageContext } from 'next'
-import React from 'react'
-import Head from 'next/head'
-import { ApolloProvider } from '@apollo/react-hooks'
-import { ApolloClient } from 'apollo-client'
-import { InMemoryCache, NormalizedCacheObject } from 'apollo-cache-inmemory'
+import { NextPage, NextPageContext } from "next"
+import React from "react"
+import Head from "next/head"
+import { ApolloProvider } from "@apollo/react-hooks"
+import { ApolloClient } from "apollo-client"
+import { InMemoryCache, NormalizedCacheObject } from "apollo-cache-inmemory"
+import { ApolloLink } from "apollo-link"
 
 
 type TApolloClient = ApolloClient<NormalizedCacheObject>
@@ -141,25 +142,42 @@ function initApolloClient(initialState?: any) {
 function createApolloClient(initialState = {}) {
   const ssrMode = typeof window === 'undefined'
   const cache = new InMemoryCache().restore(initialState)
+  const httpLink = createIsomorphLink()
 
+  const authLink = new ApolloLink((operation, forward) => {
+    // Retrieve the authorization token from local storage.
+    const token = localStorage.getItem("token");
+  
+    // Use the setContext method to set the HTTP headers.
+    operation.setContext({
+      headers: {
+        authorization: token ? token : ""
+      }
+    })
+  
+    // Call the next link in the middleware chain.
+    return forward(operation);
+  })
+
+  
   // Check out https://github.com/zeit/next.js/pull/4611 if you want to use the AWSAppSyncClient
   return new ApolloClient({
     ssrMode,
-    link: createIsomorphLink(),
+    link: authLink.concat(httpLink),
     cache,
   })
 }
 
 function createIsomorphLink() {
-  if (typeof window === 'undefined') {
-    const { SchemaLink } = require('apollo-link-schema')
-    const schema = require('./schema').default
+  if (typeof window === "undefined") {
+    const { SchemaLink } = require("apollo-link-schema")
+    const schema = require("./schema").default
     return new SchemaLink({ schema })
   } else {
-    const { HttpLink } = require('apollo-link-http')
+    const { HttpLink } = require("apollo-link-http")
     return new HttpLink({
-      uri: 'http://localhost:4004/graphql',
-      credentials: 'same-origin',
+      uri: "http://localhost:4004/graphql",
+      credentials: "same-origin",
     })
   }
 }
