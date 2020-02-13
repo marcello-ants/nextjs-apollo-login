@@ -2,6 +2,7 @@ import React from "react"
 import withApollo from "../lib/with-apollo"
 import Link from "next/link"
 import { useGetSurveysQuery} from "../src/graphql/index"
+// import Auth from "../components/Auth"
 
 const Surveys = () => {
   const { data, loading, error } = useGetSurveysQuery({ fetchPolicy: "network-only" })
@@ -19,7 +20,9 @@ const Surveys = () => {
       ) :(
         <>
           <div>you're logged in</div>
-          <Link href="/">home</Link>
+          <Link href="/">
+            <a>home</a>
+          </Link>
         </>  
       )}
     </div>

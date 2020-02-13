@@ -19,7 +19,9 @@ const AuthenticatedApp = () => {
       ) :(
         <>
           <div>you're logged in</div>
-          <Link href="surveys">surveys</Link>
+          <Link href="surveys">
+            <a>surveys</a>
+          </Link>
           <Logout />
         </>  
       )}
