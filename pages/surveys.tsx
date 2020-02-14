@@ -2,30 +2,40 @@ import React from "react"
 import withApollo from "../lib/with-apollo"
 import Link from "next/link"
 import { useGetSurveysQuery} from "../src/graphql/index"
-// import Auth from "../components/Auth"
+import {useAuthState} from "../components/Auth"
+import AppProvider from "../context/index"
 
-const Surveys = () => {
+const SurveyList = () => {
+  const isLogged = useAuthState()
+
   const { data, loading, error } = useGetSurveysQuery({ fetchPolicy: "network-only" })
 
-  if (error) {
-    return <div>error on technologies list</div>
-  }
-
-  console.log(data)
-
-  return (
-    <div>
-      {loading ? (
-        <div>loading</div>
-      ) :(
+  return isLogged ? (
+    <>
+      {error ? <div>error on technologies list</div> : (
         <>
-          <div>you're logged in</div>
-          <Link href="/">
-            <a>home</a>
-          </Link>
-        </>  
+          {loading ? (
+              <div>loading</div>
+            ) :(
+              <>
+                {console.log(data)}
+                <div>you're logged in</div>
+                <Link href="/">
+                  <a>home</a>
+                </Link>
+              </>  
+          )}
+        </>
       )}
-    </div>
+    </>
+  ) : null
+}
+
+const Surveys = () => {
+  return (
+    <AppProvider>
+      <SurveyList/>
+    </AppProvider>
   )
 }
 

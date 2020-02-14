@@ -8,38 +8,23 @@ const AuthContext = React.createContext({})
 
 export function useAuthState(){
   const state = React.useContext(AuthContext)
-  console.log("state", state)
-  return {...state}
+  return state
 }
 
 function AuthProvider({children}: Props) {
-  // const [state, setState] = React.useState({
-  //   status: "pending",
-  //   error: null,
-  //   user: null
-  // })
-
-  // React.useEffect(() => {
-  //   if (localStorage.getItem("token")) setState({status: "success", error: null, user: "jorge"})
-  //   else setState(false)
-  // })  
-
-  // const [isLogged, setIsLogged] = React.useState()
-  const [state, setState] = React.useState({
-    isLogged: false
-  })
+  const [isLogged, setIsLogged] = React.useState()
 
   React.useEffect(() => {
-    if (localStorage.getItem("token")) setState({isLogged: true})
-    else setState({isLogged: false})
+    if (localStorage.getItem("token")) setIsLogged(true)
+    else setIsLogged(false)
   }, [])
   
   return (
-    <AuthContext.Provider value={state}>
-      {state.isLogged ? (
+    <AuthContext.Provider value={isLogged}>
+      {isLogged ? (
         children
       ) : (
-        <div></div>
+        <div>you must be logged in to see this content</div>
       )}
     </AuthContext.Provider>
   )
