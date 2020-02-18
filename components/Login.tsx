@@ -53,7 +53,7 @@ const Login = ({sendLoginInfo}: LoginProps) => {
             <input
               id="password"
               placeholder="enter your password"
-              type="text"
+              type="password"
               value={values.password}
               onChange={handleChange}
               onBlur={handleBlur}

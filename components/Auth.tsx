@@ -6,31 +6,26 @@ interface Props {
 
 const AuthContext = React.createContext({})
 
-export function useAuthState(){
-  const state = React.useContext(AuthContext)
-  return state
-}
-
-function AuthProvider({children}: Props) {
+export default function AuthProvider({children}: Props) {
   const [isLogged, setIsLogged] = React.useState()
 
   React.useEffect(() => {
     if (localStorage.getItem("token")) setIsLogged(true)
     else setIsLogged(false)
   }, [])
-  
+
   return (
     <AuthContext.Provider value={isLogged}>
-      {isLogged ? (
-        children
+      {isLogged === undefined ? (
+        <div></div>
       ) : (
-        <div>you must be logged in to see this content</div>
+        children
       )}
     </AuthContext.Provider>
-  )
+  );
 }
 
-export default AuthProvider
-
-
-
+export function useAuthState() {
+  const state = React.useContext(AuthContext);
+  return state
+}

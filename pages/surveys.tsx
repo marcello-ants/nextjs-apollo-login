@@ -1,14 +1,12 @@
 import React from "react"
 import withApollo from "../lib/with-apollo"
+import AuthProvider, {useAuthState} from "../components/Auth"
 import Link from "next/link"
 import { useGetSurveysQuery} from "../src/graphql/index"
-import {useAuthState} from "../components/Auth"
-import AppProvider from "../context/index"
 
 const SurveyList = () => {
-  const isLogged = useAuthState()
-
   const { data, loading, error } = useGetSurveysQuery({ fetchPolicy: "network-only" })
+  const isLogged = useAuthState()
 
   return isLogged ? (
     <>
@@ -19,7 +17,7 @@ const SurveyList = () => {
             ) :(
               <>
                 {console.log(data)}
-                <div>you're logged in</div>
+                <div>survey list</div>
                 <Link href="/">
                   <a>home</a>
                 </Link>
@@ -33,9 +31,9 @@ const SurveyList = () => {
 
 const Surveys = () => {
   return (
-    <AppProvider>
+    <AuthProvider>
       <SurveyList/>
-    </AppProvider>
+    </AuthProvider>
   )
 }
 
