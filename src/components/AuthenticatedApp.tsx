@@ -1,7 +1,7 @@
 import React from "react"
 import Link from 'next/link'
 import Logout from "./Logout"
-import { useGetTechnologiesQuery} from "../src/graphql/index"
+import { useGetTechnologiesQuery} from "../graphql/index"
 
 const AuthenticatedApp = () => {
   const { data, loading, error } = useGetTechnologiesQuery({ fetchPolicy: "network-only" })

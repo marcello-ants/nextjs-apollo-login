@@ -2,7 +2,7 @@ import React from "react"
 import withApollo from "../lib/with-apollo"
 import AuthProvider, {useAuthState} from "../components/Auth"
 import Link from "next/link"
-import { useGetSurveysQuery} from "../src/graphql/index"
+import { useGetSurveysQuery} from "../graphql/index"
 
 const SurveyList = () => {
   const { data, loading, error } = useGetSurveysQuery({ fetchPolicy: "network-only" })

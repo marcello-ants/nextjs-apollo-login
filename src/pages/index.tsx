@@ -1,0 +1,59 @@
+import React from "react"
+// import { NextPage } from "next"
+import withApollo from "../lib/with-apollo"
+import { useAuth0 } from "../lib/auth0-spa"
+import AuthProvider, {useAuthState} from "../components/Auth"
+import UnauthenticatedApp from "../components/UnauthenticatedApp"
+import AuthenticatedApp from "../components/AuthenticatedApp"
+
+interface LocalDataTypes {
+  token: string | null
+}
+
+// const App = () => {
+//   let localData:LocalDataTypes = { token: ""}
+//   if (typeof window !== 'undefined') {
+//     localData.token = localStorage.getItem("token") 
+//   } 
+
+//    const setToken = (data: any) => {
+//     localStorage.setItem("token", data.loginWithPassword.token)
+//     localData.token = localStorage.getItem("token")
+//   }
+
+//   const user = useAuthState()
+
+//   const [isLogged, setIsLogged] = React.useState()
+
+//   React.useEffect(() => {
+//     if (user) setIsLogged(true)
+//     else setIsLogged(false)
+//   }, [])
+  
+//   return isLogged ? <AuthenticatedApp /> : <UnauthenticatedApp sendLocalData={setToken} />
+// } 
+
+// const Index = () => {
+//   return (
+//     <AuthProvider>
+//       <App/>
+//     </AuthProvider>
+//   )
+// }
+
+const Index = () => {
+  const { isAuthenticated, loginWithRedirect, logout, user } = useAuth0()
+  
+  return (
+    <>
+      {!isAuthenticated && (
+        <button onClick={() => loginWithRedirect({})}>Log in</button>
+      )}
+    </>
+    // <AuthProvider>
+    //   <App/>
+    // </AuthProvider>
+  )
+}
+
+export default withApollo(Index)

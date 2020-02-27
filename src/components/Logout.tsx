@@ -1,5 +1,5 @@
 import React from "react"
-import { useLogoutMutation } from "../src/graphql/index"
+import { useLogoutMutation } from "../graphql/index"
 
 const Login = () => {
   const [logout] = useLogoutMutation()

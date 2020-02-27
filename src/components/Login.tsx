@@ -1,6 +1,6 @@
 import React from "react"
 import { Formik } from "formik"
-import { useLoginMutation, LoginDocument } from "../src/graphql/index"
+import { useLoginMutation, LoginDocument } from "../graphql/index"
 
 interface LoginProps {
   sendLoginInfo: (data: object) => void
