@@ -44,8 +44,6 @@ export const Auth0Provider: React.FunctionComponent<Auth0ProviderProps> = ({
   const [loading, setLoading] = React.useState(true)
   const [popupOpen, setPopupOpen] = React.useState(false)
 
-  console.log(domain)
-
   React.useEffect(() => {
     const initAuth0 = async () => {
       const auth0FromHook = await createAuth0Client({
@@ -53,10 +51,6 @@ export const Auth0Provider: React.FunctionComponent<Auth0ProviderProps> = ({
         client_id: clientId,
         redirect_uri: redirectUri
       })
-
-      console.log("a", auth0FromHook)
-
-      console.log(auth0FromHook)
       setAuth0(auth0FromHook)
 
       if (window.location.search.includes('code=')) {

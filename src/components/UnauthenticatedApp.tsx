@@ -1,5 +1,6 @@
 import React from "react"
 import Login from "./Login"
+import { useAuth0 } from "../lib/auth0-spa"
 
 interface Props {
   sendLocalData: (data: object) => void
